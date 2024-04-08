@@ -91,7 +91,7 @@ public class BookingService {
       bookingEmail.setCheckIn(formatter.format(checkIn));
       bookingEmail.setCheckOut(formatter.format(checkOut));
 
-      String token = jwtService.token("booking@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.notification.url", "http://127.0.0.1:8082");
       webClient.post()
           .uri(String.format("%s/api/mail/booking-message", uri))
@@ -151,7 +151,7 @@ public class BookingService {
 
     // send transaction request to payment service
     try {
-      String token = jwtService.token("booking@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.payment.url", "http://127.0.0.1:8083");
       TransactionResponseDto response = webClient.post()
           .uri(String.format("%s/api/transaction", uri))
@@ -201,7 +201,7 @@ public class BookingService {
       transactionEmail.setCardNo("*****" + cardNumber.substring(cardNumber.length() - 4));
       transactionEmail.setCardType(transactionDetail.getCardType());
 
-      String token = jwtService.token("booking@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.notification.url", "http://127.0.0.1:8082");
       webClient.post()
           .uri(String.format("%s/api/mail/transaction-message", uri))
@@ -219,7 +219,7 @@ public class BookingService {
   private CustomerResponseDto getCustomerDetail(String customerNumber) {
     // get customer details from customer service
     try {
-      String token = jwtService.token("booking@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.customer.url", "http://127.0.0.1:8080");
       CustomerResponseDto customer = webClient.get()
           .uri(String.format("%s/api/customer?number=%s", uri, customerNumber))
@@ -238,7 +238,7 @@ public class BookingService {
   private TransactionDetailDto getTransactionDetail(Long id) {
     // get transaction details from payment service
     try {
-      String token = jwtService.token("booking@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.payment.url", "http://127.0.0.1:8083");
       TransactionDetailDto response = webClient.get()
           .uri(String.format("%s/api/transaction/%s", uri, id))

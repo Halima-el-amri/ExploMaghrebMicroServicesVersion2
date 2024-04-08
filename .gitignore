@@ -5,3 +5,4 @@ application.properties
 target/
 *.log
 *.iml
+exploDb.mv.db
