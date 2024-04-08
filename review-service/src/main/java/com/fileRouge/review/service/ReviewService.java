@@ -98,7 +98,7 @@ public class ReviewService {
   private CustomerResponseDto getCustomerDetail(String customerNumber) {
     // get customer details from customer service
     try {
-      String token = jwtService.token("review@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.customer.url", "http://127.0.0.1:8080");
       CustomerResponseDto customer = webClient.get()
           .uri(String.format("%s/api/customer?number=%s", uri, customerNumber))
@@ -117,7 +117,7 @@ public class ReviewService {
   private Boolean isCustomerBooked(String customerNumber) {
     // check if customer has ever booked from booking service
     try {
-      String token = jwtService.token("review@project19.co.tz");
+      String token = jwtService.token("elamrihalima2001@gmail.com");
       String uri = env.getProperty("application.service.booking.url", "http://127.0.0.1:8081");
       return webClient.get()
           .uri(String.format("%s/api/customer-booked/%s", uri, customerNumber))
