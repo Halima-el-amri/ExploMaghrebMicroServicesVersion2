@@ -33,13 +33,6 @@ public class ReviewService {
   private JwtToken jwtService;
 
   public ResponseMessage createReview(ReviewRequestDto reviewRequest) {
-    // check if customer has ever booked from booking service
-    Boolean isBooked = isCustomerBooked(reviewRequest.getCustomerNumber());
-    if (!isBooked) {
-      throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
-          "customer must booked before write a review");
-    }
-
     // get customer details from customer service
     CustomerResponseDto customer = getCustomerDetail(reviewRequest.getCustomerNumber());
 
@@ -60,6 +53,35 @@ public class ReviewService {
 
     return new ResponseMessage("success");
   }
+
+//  public ResponseMessage createReview(ReviewRequestDto reviewRequest) {
+//    // check if customer has ever booked from booking service
+//    Boolean isBooked = isCustomerBooked(reviewRequest.getCustomerNumber());
+//    if (!isBooked) {
+//      throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE,
+//          "customer must booked before write a review");
+//    }
+//
+//    // get customer details from customer service
+//    CustomerResponseDto customer = getCustomerDetail(reviewRequest.getCustomerNumber());
+//
+//    // save review detail
+//    ReviewModel review = new ReviewModel();
+//    review.setTitle(reviewRequest.getTitle());
+//    review.setDescription(reviewRequest.getDescription());
+//    review.setRate(reviewRequest.getRate());
+//    review.setCustomerNumber(customer.getCustNumber());
+//    review.setEmail(customer.getEmail());
+//    review.setFullname(customer.getFirstName() + " " + customer.getLastName());
+//
+//    try {
+//      reviewRepository.insert(review);
+//    } catch (DataIntegrityViolationException e) {
+//      throw new ResponseStatusException(HttpStatus.CONFLICT, "customer review already exists");
+//    }
+//
+//    return new ResponseMessage("success");
+//  }
 
   public ResponseMessage updateReview(ReviewRequestDto reviewRequest) {
     // save review detail
@@ -128,4 +150,14 @@ public class ReviewService {
       throw new ResponseStatusException(we.getStatusCode());
     }
   }
+
+
+  public ResponseMessage deleteReview(String customerNumber) {
+    ReviewModel review = reviewRepository.findByCustomerNumber(customerNumber)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("cannot find review by customer number %s", customerNumber)));
+    reviewRepository.delete(review);
+    return new ResponseMessage("Review deleted successfully");
+  }
+
 }
