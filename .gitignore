@@ -6,3 +6,4 @@ target/
 *.log
 *.iml
 exploDb.mv.db
+MailHog_windows_amd64.exe

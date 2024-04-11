@@ -20,9 +20,9 @@ public class PaymentGatewaySimulator {
 
   static {
     accounts.add(
-        new CardDetail("5161 4800 0276 4486", "09/23", "175", "MASTERCARD", "NMB", 75000.00));
+        new CardDetail("5161 4800 0276 4486", "09/30", "175", "MASTERCARD", "NMB", 75000.00));
     accounts.add(
-        new CardDetail("4107 7342 3815 8180", "11/23", "186", "VISA", "CRDB", 55000.00));
+        new CardDetail("4107 7342 3815 8180", "11/30", "186", "VISA", "CRDB", 55000.00));
   }
 
   public static PaymentResponse validateAccBalance(CardRequest cardRequest) {

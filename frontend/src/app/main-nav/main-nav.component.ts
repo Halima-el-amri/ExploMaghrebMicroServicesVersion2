@@ -35,7 +35,19 @@ export class MainNavComponent {
       isProtected: true,
     },
     {
-      name: 'Bookings',
+      name: 'Guide-Tour',
+      path: '/guide-tour',
+      show: this.isLogin$,
+      isProtected: true,
+    },
+    {
+      name: 'Cities',
+      path: '/cities',
+      show: this.isLogin$,
+      isProtected: true,
+    },
+    {
+      name: 'Hotels',
       path: '/booking',
       show: this.isLogin$,
       isProtected: true,

@@ -1,0 +1,24 @@
+#spring:
+#  application:
+#    name: cities
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/ExploreMaghrebDB
+#    username: postgres
+#    password: 123456
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#    hibernate:
+#      ddl-auto: update
+#  data:
+#    jpa:
+#      repositories:
+#        enabled: true
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone : http://localhost:8761/eureka/
+#server:
+#  port: 8083

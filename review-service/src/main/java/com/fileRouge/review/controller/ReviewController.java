@@ -41,4 +41,11 @@ public class ReviewController {
   public List<ReviewResponseDto> getReviewsDetail() {
     return reviewService.getReviews();
   }
+
+
+  @DeleteMapping("/review/delete/{number}")
+  @ResponseStatus(HttpStatus.OK)
+  public ResponseMessage deleteReview(@PathVariable String number) {
+    return reviewService.deleteReview(number);
+  }
 }
