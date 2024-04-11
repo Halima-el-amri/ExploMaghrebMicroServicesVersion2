@@ -21,6 +21,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { MicroserviceStore } from './store/microservice.store';
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { GuideTourComponent } from './components/guide-tour/guide-tour.component';
+import { CitiesComponent } from './components/cities/cities.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { DateFormatPipe } from './pipes/date-format.pipe';
     AddReviewComponent,
     UpdateReviewComponent,
     DateFormatPipe,
+    GuideTourComponent,
+    CitiesComponent,
   ],
   imports: [
     BrowserModule,
