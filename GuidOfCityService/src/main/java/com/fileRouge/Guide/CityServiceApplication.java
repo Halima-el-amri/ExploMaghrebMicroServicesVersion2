@@ -1,4 +1,4 @@
-package com.fileRouge.City;
+package com.fileRouge.Guide;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

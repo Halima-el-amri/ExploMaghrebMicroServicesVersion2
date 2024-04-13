@@ -11,7 +11,7 @@
 	<groupId>com.fileRouge</groupId>
 	<artifactId>City</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CityService</name>
+	<name>GuidOfCityService</name>
 	<description>City Service for Microservice Project</description>
 	<properties>
 		<java.version>17</java.version>
