@@ -1,1 +1,18 @@
-<p>guide-tour works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let tour of guideTours">
+      <div class="card">
+        <img class="card-img-top" [src]="tour.imageUrl" alt="Tour Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ tour.name }}</h5>
+          <p class="card-text">{{ tour.description }}</p>
+          <p class="card-text"><strong>Location:</strong> {{ tour.location }}</p>
+          <p class="card-text"><strong>Price:</strong> {{ tour.price }}</p>
+          <p class="card-text"><strong>Availability:</strong> {{ tour.availability ? 'Available' : 'Not Available' }}</p>
+          <p class="card-text"><strong>Rating:</strong> {{ tour.rating }}</p>
+          <p class="card-text"><strong>Highlights:</strong> {{ tour.highlights.join(', ') }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
