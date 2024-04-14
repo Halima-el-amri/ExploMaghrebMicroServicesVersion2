@@ -1,14 +1,10 @@
 package com.fileRouge.payment.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +12,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "transaction")
+@Document(collection = "transaction")
 public class TransactionModel {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @NotNull
-  @Column(unique = true)
   private String bookingNumber;
 
   private String cardNumber;
@@ -37,7 +30,5 @@ public class TransactionModel {
 
   private Double amount;
 
-  @Column(updatable = false)
-  @CreationTimestamp
   private LocalDateTime createdAt;
 }
