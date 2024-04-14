@@ -41,7 +41,7 @@ export class MainNavComponent {
       isProtected: true,
     },
     {
-      name: 'Cities',
+      name: 'GuideofCity',
       path: '/cities',
       show: this.isLogin$,
       isProtected: true,
