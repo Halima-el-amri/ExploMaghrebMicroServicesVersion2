@@ -37,11 +37,18 @@
 
 ### Service de Courrier Électronique
 - **Spring Mail**: Une bibliothèque utilisée pour envoyer des emails via le framework Spring.
+  
+###  la sécurité avec Spring Security :
+JWT
+### Intégration continue avec Jenkins :
+
+
+### Intégration de la qualité du code avec Sonarlinte :
+
+### Conteneurisation de l'application avec Docker 
 
 ### Découverte de Services
 - **Eureka**: Un service REST principalement utilisé dans le cloud AWS pour localiser des services à des fins d'équilibrage de charge et de basculement des serveurs de couche intermédiaire.
-
-
 
 ## Contact
 
