@@ -24,6 +24,20 @@ pipeline {
             }
         }
 
+        stage('Test Review Service') {
+            steps {
+                dir('review-service') {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn test'
+                        } else {
+                            bat 'mvn test'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Build Payment Service') {
             steps {
                 dir('payment-service') {
@@ -32,6 +46,20 @@ pipeline {
                             sh 'mvn clean install'
                         } else {
                             bat 'mvn clean install'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Test Payment Service') {
+            steps {
+                dir('payment-service') {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn test'
+                        } else {
+                            bat 'mvn test'
                         }
                     }
                 }
