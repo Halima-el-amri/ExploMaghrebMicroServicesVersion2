@@ -9,11 +9,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a transaction in the system.
+ * Each transaction includes details such as the booking number, card details, payment mode,
+ * bank name, transaction amount, and the date and time it was created.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "transaction")
 public class TransactionModel {
+
+
   @Id
   private Long id;
 
