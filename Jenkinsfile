@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build Review Service') {
             steps {
-                dir('review') {
+                dir('review-service') {
                     script {
                         if (isUnix()) {
                             sh 'mvn clean install'
@@ -26,7 +26,7 @@ pipeline {
 
         stage('Build Payment Service') {
             steps {
-                dir('payment') {
+                dir('payment-service') {
                     script {
                         if (isUnix()) {
                             sh 'mvn clean install'
