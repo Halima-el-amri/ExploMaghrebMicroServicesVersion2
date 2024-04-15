@@ -10,28 +10,33 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Review Service') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'mvn clean install'
-                    } else {
-                        bat 'mvn clean install'
+                dir('review') {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn clean install'
+                        } else {
+                            bat 'mvn clean install'
+                        }
                     }
                 }
             }
         }
 
-        stage('Test') {
+        stage('Build Payment Service') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'mvn test'
-                    } else {
-                        bat 'mvn test'
+                dir('payment') {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn clean install'
+                        } else {
+                            bat 'mvn clean install'
+                        }
                     }
                 }
             }
         }
-    }
+
+
 }
