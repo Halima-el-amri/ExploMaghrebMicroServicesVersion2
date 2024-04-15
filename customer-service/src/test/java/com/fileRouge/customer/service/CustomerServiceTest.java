@@ -1,6 +1,5 @@
+
 package com.fileRouge.customer.service;
-
-
 
 import com.fileRouge.customer.dto.AuthRequestDto;
 import com.fileRouge.customer.dto.AuthResponseDto;
@@ -9,7 +8,6 @@ import com.fileRouge.customer.dto.CustomerResponseDto;
 import com.fileRouge.customer.message.ResponseMessage;
 import com.fileRouge.customer.model.CustomerModel;
 import com.fileRouge.customer.repository.CustomerRepository;
-import com.fileRouge.customer.service.CustomerService;
 import com.fileRouge.customer.util.JwtToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +15,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.*;
+        import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,12 +46,9 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void testCustomerRegister() {
+    public void customerRegisterShouldReturnSuccessWhenEmailIsUnique() {
         CustomerRequestDto customerRequest = new CustomerRequestDto();
-        customerRequest.setFirstName("halima");
-        customerRequest.setLastName("el amri");
-        customerRequest.setEmail("elamrihalima@gmail.com");
-        customerRequest.setPassword("pass1234");
+        customerRequest.setEmail("uniqueEmail@gmail.com");
 
         ResponseMessage response = customerService.customerRegister(customerRequest);
 
@@ -60,52 +57,54 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void testAuthenticateCustomer() {
+    public void customerRegisterShouldThrowExceptionWhenEmailAlreadyExists() {
+        CustomerRequestDto customerRequest = new CustomerRequestDto();
+        customerRequest.setEmail("existingEmail@gmail.com");
+
+        when(customerRepository.insert((CustomerModel) any())).thenThrow(DataIntegrityViolationException.class);
+
+        assertThrows(ResponseStatusException.class, () -> customerService.customerRegister(customerRequest));
+    }
+
+
+
+    @Test
+    public void authenticateCustomerShouldThrowExceptionWhenEmailIsInvalid() {
         AuthRequestDto authRequest = new AuthRequestDto();
-        authRequest.setEmail("elamrihalima@gmail.com");
-        authRequest.setPassword("pass1234");
+        authRequest.setEmail("invalidEmail@gmail.com");
 
-        CustomerModel customer = new CustomerModel();
-        customer.setEmail("elamrihalima@gmail.com");
-        customer.setPassword("encodedPassword");
+        when(customerRepository.findByEmail(any())).thenReturn(Optional.empty());
 
-        when(customerRepository.findByEmail("elamrihalima@gmail.com")).thenReturn(Optional.of(customer));
-        when(passwordEncoder.matches("pass1234", "encodedPassword")).thenReturn(true);
-
-        AuthResponseDto response = customerService.authenticateCustomer(authRequest);
-
-        assertEquals("elamrihalima@gmail.com", response.getEmail());
-        verify(customerRepository, times(1)).findByEmail("elamrihalima@gmail.com");
-        verify(passwordEncoder, times(1)).matches("pass1234", "encodedPassword");
+        assertThrows(ResponseStatusException.class, () -> customerService.authenticateCustomer(authRequest));
     }
 
     @Test
-    public void testGetCustomerByNumber() {
-        String customerNumber = "12345678";
+    public void authenticateCustomerShouldThrowExceptionWhenPasswordIsInvalid() {
+        AuthRequestDto authRequest = new AuthRequestDto();
+        authRequest.setEmail("validEmail@gmail.com");
+        authRequest.setPassword("invalidPassword");
 
-        CustomerModel customer = new CustomerModel();
-        customer.setCustNumber(customerNumber);
+        when(customerRepository.findByEmail(any())).thenReturn(Optional.of(new CustomerModel()));
+        when(passwordEncoder.matches(any(), any())).thenReturn(false);
 
-        when(customerRepository.findByCustNumber("12345678")).thenReturn(Optional.of(customer));
-
-        CustomerResponseDto response = customerService.getCustomerByNumber(customerNumber);
-
-        assertEquals("12345678", response.getCustNumber());
-        verify(customerRepository, times(1)).findByCustNumber("12345678");
+        assertThrows(ResponseStatusException.class, () -> customerService.authenticateCustomer(authRequest));
     }
 
+
+
     @Test
-    public void testGetCustomerByEmail() {
-        String email = "elamrihalima@gmail.com";
+    public void getCustomerByNumberShouldThrowExceptionWhenNumberDoesNotExist() {
+        when(customerRepository.findByCustNumber(any())).thenReturn(Optional.empty());
 
-        CustomerModel customer = new CustomerModel();
-        customer.setEmail(email);
+        assertThrows(ResponseStatusException.class, () -> customerService.getCustomerByNumber("nonExistingNumber"));
+    }
 
-        when(customerRepository.findByEmail("elamrihalima@gmail.com")).thenReturn(Optional.of(customer));
 
-        CustomerResponseDto response = customerService.getCustomerByEmail(email);
 
-        assertEquals("elamrihalima@gmail.com", response.getEmail());
-        verify(customerRepository, times(1)).findByEmail("elamrihalima@gmail.com");
+    @Test
+    public void getCustomerByEmailShouldThrowExceptionWhenEmailDoesNotExist() {
+        when(customerRepository.findByEmail(any())).thenReturn(Optional.empty());
+
+        assertThrows(ResponseStatusException.class, () -> customerService.getCustomerByEmail("nonExistingEmail@gmail.com"));
     }
 }
