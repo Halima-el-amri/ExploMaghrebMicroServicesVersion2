@@ -97,11 +97,6 @@
 			<scope>test</scope>
 		</dependency>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> dev
 	</dependencies>
 
 	<build>
